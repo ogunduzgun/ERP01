@@ -89,7 +89,7 @@ const Machine = () => {
               justifyContent: "space-around",
             }}
           >
-            Güncelle
+            Güncelle222
           </Button>
           <Button
             type="submit"
