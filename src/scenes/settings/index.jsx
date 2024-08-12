@@ -3,28 +3,23 @@ import {
   Typography,
   useTheme,
   TextField,
-  FormGroup,
-  FormControlLabel,
-  Switch,
+  
+  IconButton,
 } from "@mui/material";
 import Header from "../../components/Header";
 import { Formik } from "formik";
 import useMediaQuery from "@mui/material/useMediaQuery";
-
 import { tokens } from "../../theme";
-
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 const Settings = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
   const handleFormSubmit = (values) => {
-    console.log(values);
   };
 
   let MachineCount = ["Pres", "Emaye", "23", "33", "44"];
-
   const isNonMobile = useMediaQuery("(min-width:350px)");
-
   const initialValues = {
     StokNo: "",
     Description: "",
@@ -32,53 +27,64 @@ const Settings = () => {
     machine: "",
     operation: "",
     Route: "",
-    process:"",
+    process: "",
   };
-
   const Kutu = () => {
     return (
       <Box
-        // mt="15px"
+      display="grid" 
+     // gridTemplateColumns="repeat(8, 1fr)" 
+      gap="10px"
+        mt="5px"
         // ml="5px"
-        display="grid"
+        //display="grid"
         // mr="5px"
+       width="15%"
+       // height="50%"
         border="2px solid"
         textAlign="center"
-        sx={{ gridColumn: "span 1" }}
+        gridTemplateColumns="repeat(4, 1fr)"
+      
+        
       >
         <Box
           display="grid"
           border="1px solid"
-          textAlign="center"
-          height="20vh"
-          sx={{ gridColumn: "span 4" }}
-        >
+          height="100%"
+          sx={{ gridColumn: "span 4"}}
+        > 
           <Typography color={colors.grey[100]}>Görsel</Typography>
         </Box>
         <Formik
           onSubmit={handleFormSubmit}
           initialValues={initialValues}
           // validationSchema={userSchema}
+         display="grid"
+         sx={{ gridColumn: "span 3"}}
+
+
         >
           {({
             values,
-
             touched,
             handleBlur,
             handleChange,
             handleSubmit,
           }) => (
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}
+            display="grid"
+            //sx={{  gridColumn: "span 1"}}
+            >
+
+              
               <Box
-                display="grid"
+               display="grid"
+               //justifyContent="start"
+               //gridColumnStart="1"
                 gap="10px" //alanların birbiri arasındaki mesafe
-                gridTemplateColumns="repeat(4, minmax(0, 1fr))" //oluşturulan dikey sütun
-                mt="10px" //tablo baslangıcı ile üst taraf arasındaki mesafe
-                ml="10px"
-                mr="10px"
-                sx={{
-                  "& > div": { gridColumn: isNonMobile ? undefined : "span 8" },
-                }}
+                //gridTemplateColumns="repeat(5, minmax(0, 1fr))" //oluşturulan dikey sütun
+                sx={{ gridColumn: "span 2", justifyContent:"space-between"}}
+//textbox özellikleri
               >
                 <TextField
                   // fullWidth:false
@@ -91,12 +97,15 @@ const Settings = () => {
                   value={values.StokNo}
                   name="StokNo"
                   size="medium" //medium ve small
+               display="grid"
+                sx={{ gridColumn: "span 16"}}
+                  
                   // defaultValue="ilk deger" //olmayabiilir, eğer kullanılmıyorsa
-                  sx={{ gridColumn: "span 4" }} //alanların genişliği
+                  //sx={{ gridColumn: "span 30" }} //alanların genişliği
                 />
 
                 <TextField
-                  fullWidth
+                 // fullWidth
                   required
                   variant="filled"
                   type="text"
@@ -105,10 +114,12 @@ const Settings = () => {
                   onChange={handleChange}
                   value={values.Description}
                   name="Description"
-                  sx={{ gridColumn: "span 4" }}
+                display="grid"
+                sx={{ gridColumn: "span 16"}}
+
                 />
                 <TextField
-                  fullWidth
+                  //fullWidth
                   required
                   variant="filled"
                   type="text"
@@ -117,10 +128,11 @@ const Settings = () => {
                   onChange={handleChange}
                   value={values.hedef}
                   name="target"
-                  sx={{ gridColumn: "span 4" }}
+                  display="grid"
+                sx={{ gridColumn: "span 16"}}
                 />
-                 <TextField
-                  fullWidth
+                <TextField
+                  //fullWidth
                   required
                   variant="filled"
                   type="text"
@@ -129,10 +141,11 @@ const Settings = () => {
                   onChange={handleChange}
                   value={values.hedef}
                   name="process"
-                  sx={{ gridColumn: "span 4" }}
+                  display="grid"
+                  sx={{ gridColumn: "span 16"}}
                 />
                 <TextField
-                  fullWidth
+                 // fullWidth
                   required
                   variant="filled"
                   type="text"
@@ -141,23 +154,29 @@ const Settings = () => {
                   onChange={handleChange}
                   value={values.machine}
                   name="machine"
-                  sx={{ gridColumn: "span 4" }}
+                  display="grid"
+                sx={{ gridColumn: "span 16"}}
                 />
                 <TextField
-                  fullWidth
+                  //fullWidth
                   variant="filled"
                   type="text"
                   required
                   label="Operasyon Adı"
-                  
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.operation}
                   name="operation"
-                  sx={{ gridColumn: "span 4" , '.MuiInputBase-input': { fontSize: '0,1rem' },}}
+                  display="grid"
+                  sx={{gridColumn: "span 16",
+                   
+                    
+                    ".MuiInputBase-input": { fontSize: "0,1rem" },
+                  }}
+                  
                 />
                 <TextField
-                  fullWidth
+                  //fullWidth
                   variant="filled"
                   type="text"
                   label="Route"
@@ -165,49 +184,52 @@ const Settings = () => {
                   onChange={handleChange}
                   value={values.route}
                   name="route"
-                  sx={{ gridColumn: "span 4", textAlign: "center" }}
+                 // sx={{ gridColumn: "span 4", textAlign: "center" }}
+                  
+
+
+                 display="grid"
+                sx={{ gridColumn: "span 16"}}
                   disabled
                 />
-                <FormGroup>
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        defaultChecked
-                        color="secondary"
-                        style={{ margin: "0px" }}
-                      />
-                    }
-                    label={
-                      <span
-                        style={{
-                          fontSize: "1rem",
-                          margin: "5px",
-                          padding: "5px",
-                        }}
-                      >
-                        Kapalı
-                      </span>
-                    }
-                  />
-                </FormGroup>
               </Box>
             </form>
           )}
         </Formik>
+        <Box 
+       display="grid"
+
+       sx={{ gridColumn: "span 4"}}
+        >
+          <IconButton>
+            <ArrowRightIcon  fontSize="large"></ArrowRightIcon>
+          </IconButton>
+          <IconButton>
+            <ArrowDropDownIcon fontSize="large"></ArrowDropDownIcon>
+          </IconButton>
+        </Box>
       </Box>
     );
   };
   return (
     <div>
-      <Box>
+      <Box
+      display="grid"
+      >
         <Header title="SETTINGS" subtittle="Ayarlar" />
       </Box>
-      <Box display="grid" gridTemplateColumns="repeat(9, 1fr)" gap="10px">
-        {MachineCount.map((machine) => (
+      <Box 
+       display="grid"
+        
+      >
+        
           <div>
-            <Kutu key={machine} display="grid" sx={{ gridColumn: "span 2" }}></Kutu>({machine});
+            <Kutu
+             
+            ></Kutu>
+            
           </div>
-        ))}
+       
       </Box>
     </div>
   );

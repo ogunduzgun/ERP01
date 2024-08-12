@@ -19,6 +19,8 @@ import Settings from "./scenes/settings";
 import Login from "./login/loginMainMenu";
 import Process from "./ProsesMakineTanimlama/Process";
 import Machine from "./ProsesMakineTanimlama/Machine";
+import Sprocess from "./ProsesMakineTanimlama/Sprocess";
+
 
 
 function App() {
@@ -45,6 +47,8 @@ function App() {
               <Route path="/settings" element={<Settings />} />
               <Route path="/login" element={<Login />} />
               <Route path="/setup/process" element={<Process />} />
+              <Route path="/setup/sprocess" element={<Sprocess />} />
+
               <Route path="/setup/machine" element={<Machine />} />
 
 

@@ -2,47 +2,105 @@ import { Box, useTheme, TextField, Button } from "@mui/material";
 import Header from "../components/Header";
 import { Formik } from "formik";
 import { DataGrid } from "@mui/x-data-grid";
-import { Variables } from "../Variables";
-import { useState, useEffect } from "react";
+import Select from "react-select";
+import { useEffect, useState } from "react";
 import axios from "axios";
-
+import { Variables } from "../Variables";
 //import useMediaQuery from "@mui/material/useMediaQuery";
-
 import { tokens } from "../theme";
 
-const Process = () => {
+const Sprocess = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const handleFormSubmit = (values) => {
+    //console.log(values);
+  };
+
   const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState(null);
+  
+  
+
+  // const isNonMobile = useMediaQuery("(min-width:350px)");
+  const initialValues = {};
 
   useEffect(() => {
     axios
-      .get(Variables.API_URL + "/Process")
+      .get(Variables.API_URL + "/SubProcess")
+      
+
       .then((response) => setData(response.data))
+      
       .catch((error) => console.log(error));
   }, []);
 
-  const handleFormSubmit = (values) => {
-    console.log(values);
+  
+
+  const sutunlar = [
+    { field: "id", headerName: "ID" },
+    { field: "ProcessName", headerName: "Ana Proses", flex: 1 },
+    { field: "SubProcessName", headerName: "Alt Proses", flex: 1 },
+  ];
+
+  const Acilirmenurenkleri = {
+    option: (provided, state) => ({
+      ...provided,
+      fontSize: 12,
+      color: "primary",
+      backgroundColor: state.isSelected ? "white" : colors.primary[500],
+    }),
   };
 
   const [eklenecekproses, setEklenecekproses] = useState();
   const [secilensatir, setSecilensatir] = useState(1);
+  const [selectedValue, setSelectedValue] = useState('');
 
   const handleChange2 = (event) => {
-    console.log(event.target.value);
+    //console.log(event.target.value);
     setEklenecekproses(event.target.value);
   };
   const handleRowClick = (params) => {
+    console.log(params.row)
     setSecilensatir(params.row);
+    setSelectedValue({value: params.row.id, label: params.row.ProcessName})
+    
   };
+  
+
+  const handleChange3 = (event) => {
+    setSelectedValue({value: event.value, label: event.label});
+    setFilteredData(data.filter(item => item.ProcessName === event.label));
+
+  };
+  
+
+  const setdropdownsecenekleri = arr => {
+    const liste = arr.map(({ id, ProcessName }) => ({ value: id, label: ProcessName }));
+   
+    const unique = new Map();
+  
+    liste.forEach(item => {
+    
+      
+      if (!unique.has(item.label)) {
+        unique.set(item.label, item);
+      }
+    });
+    console.log(unique)
+    return [...unique.values()];
+  };
+ 
 
   const update = () => {
     axios
-      .put(Variables.API_URL + "/process", {
+      .put(Variables.API_URL + "/SubProcess", {
         id: secilensatir.id,
-        ProcessName: eklenecekproses,
+        SubProcessName: eklenecekproses,
+        ProcessName: secilensatir.ProcessName,
+        
       })
+
       .then((response) => {
         console.log(response.status);
         console.log(response.data);
@@ -51,18 +109,7 @@ const Process = () => {
     window.location.reload();
   };
 
-  const add = (event) => {
-    axios
-      .post(Variables.API_URL + "/process", {
-        ProcessName: eklenecekproses,
-      })
-      .then((response) => {
-        console.log(response.status);
-        console.log(response.data);
-      })
-      .catch((error) => console.log(error));
-    window.location.reload();
-  };
+ 
 
   const del = () => {
     axios
@@ -76,21 +123,13 @@ const Process = () => {
   };
   // const isNonMobile = useMediaQuery("(min-width:350px)");
 
-  const initialValues = {
-    proses: "sad",
-    Description: "",
-  };
-
-  const sutunlar = [
-    { field: "id", headerName: "ID" },
-    { field: "ProcessName", headerName: "Proses Adı", flex: 1, editable: true },
-    //{field:"date", headerName:"Tarih", flex:1},
-  ];
-
   return (
     <div display="grid">
       <Box>
-        <Header title="Proses Düzenle" subtittle="Proses Ekle/Sil/Düzenle" />
+        <Header
+          title="Alt Proses Düzenle"
+          subtittle="Alt Proses Ekle/Sil/Düzenle"
+        />
       </Box>
 
       <Box
@@ -128,7 +167,7 @@ const Process = () => {
                 border="1px solid"
                 textAlign="center"
                 borderRadius="20px"
-                height="50vh"
+                height="60vh"
                 gridColumn="span 21"
                 //   gridColumn="span 2"
                 // sx={{gridColumnStart:"1", gridColumnEnd:"3"}}
@@ -162,38 +201,55 @@ const Process = () => {
                   },
                   "& .MuiCheckbox-root": {
                     color: `${colors.greenAccent[200]} !important`,
-                    borderRadius: "20px",
                   },
                 }}
               >
                 <DataGrid
-                  rows={data}
+                  rows={filteredData ? filteredData  : data}
                   columns={sutunlar}
                   sx={{ borderRadius: 250 }}
                   onRowClick={handleRowClick}
                 ></DataGrid>
               </Box>
+
               <Box
                 display="grid"
                 gap="10px" //alanların birbiri arasındaki mesafe
                 //    gridTemplateColumns="repeat(10, minmax(0, 1fr))" //oluşturulan dikey sütun
                 mt="10px" //tablo baslangıcı ile üst taraf arasındaki mesafe
                 ml="20px"
+                mr="20px"
               >
+                <Select
+                  menuPortalTarget={document.body}
+                  menuPosition="fixed"
+                  styles={Acilirmenurenkleri}
+                options={setdropdownsecenekleri(data)}
+               //  value={secilensatir.ProcessName}
+              //options={[{value: secilensatir.id, label: secilensatir.ProcessName}]}
+              value={selectedValue}
+              onChange={handleChange3}
+                  
+                >
+                  /
+                </Select>
+
                 <TextField
                   fullWidth
                   required
-                  variant="filled" //filled-outlined-standart
-                  type="text" //number yapılabilir
-                  label="Proses Adı "
-                  onBlur={handleBlur} //fonksiyon dokundugunda degisiyor veya degismiyor
-                  onChange={handleChange2} // text değişip değişmiyor
+                  variant="filled"
+                  type="text"
+                  label="Alt Proses"
+                  onBlur={handleBlur}
+                  onChange={handleChange2}
                   value={
-                    eklenecekproses ? eklenecekproses : secilensatir.ProcessName
+                    eklenecekproses
+                      ? eklenecekproses
+                      : secilensatir.SubProcessName
                   }
-                  name="proses"
-                  size="medium" //medium ve small
-                  //sx={{ display: "grid", gridColumn: "span 35" }}
+                  name="subprocess"
+
+                  //sx={{ display: "grid", gridColumn: "span 37" }}
                 />
               </Box>
               <Box
@@ -206,37 +262,18 @@ const Process = () => {
                   type="submit"
                   color="secondary"
                   variant="contained"
-                  borderRadius="20px"
-                  //fullWidth
                   border="2px solid"
                   sx={{
                     display: "flex",
                     mt: "20px",
                     fontSize: "2rem",
                     justifyContent: "space-around",
-                    width: "33%",
-                  }}
-                  onClick={add}
-                >
-                  Ekle
-                </Button>
-                <Button
-                  type="submit"
-                  color="secondary"
-                  variant="contained"
-                  border="2px solid"
-                  sx={{
-                    display: "flex",
-                    mt: "20px",
-                    fontSize: "2rem",
-                    justifyContent: "space-around",
-                    width: "33%",
+                    width: "66%",
                   }}
                   onClick={update}
                 >
-                  Güncelle
+                  Ekle/Güncelle
                 </Button>
-
                 <Button
                   type="submit"
                   color="secondary"
@@ -261,4 +298,4 @@ const Process = () => {
   );
 };
 
-export default Process;
+export default Sprocess;
