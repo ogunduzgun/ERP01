@@ -5,7 +5,6 @@ import {
   TextField,
   IconButton,
 } from "@mui/material";
-import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import Header from "../../components/Header";
 import { Formik } from "formik";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -16,186 +15,15 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Variables } from "../../Variables";
 import Select from "react-select";
+import Gridlayout from "react-grid-layout";
 const Settings = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const handleFormSubmit = (values) => {};
 
-  const [yatay, setYatay] = useState(0);
-  const [kutuSayisi, setKutuSayisi] = useState([true]);
-  const [kutular, setKutular] = useState({
-    1: {
-      StokNo: "",
-      Description: "",
-      target: "",
-      machine: "",
-      operation: "",
-      Route: "",
-      process: "",
-      visible: true,
-    },
-    2: {
-      StokNo: "",
-      Description: "",
-      target: "",
-      machine: "",
-      operation: "",
-      Route: "",
-      process: "",
-      visible: false,
-    },
-    3: {
-      StokNo: "",
-      Description: "",
-      target: "",
-      machine: "",
-      operation: "",
-      Route: "",
-      process: "",
-      visible: false,
-    },
-    4: {
-      StokNo: "",
-      Description: "",
-      target: "",
-      machine: "",
-      operation: "",
-      Route: "",
-      process: "",
-      visible: false,
-    },
-    5: {
-      StokNo: "",
-      Description: "",
-      target: "",
-      machine: "",
-      operation: "",
-      Route: "",
-      process: "",
-      visible: false,
-    },
-    6: {
-      StokNo: "",
-      Description: "",
-      target: "",
-      machine: "",
-      operation: "",
-      Route: "",
-      process: "",
-      visible: false,
-    },
-    7: {
-      StokNo: "",
-      Description: "",
-      target: "",
-      machine: "",
-      operation: "",
-      Route: "",
-      process: "",
-      visible: false,
-    },
-    8: {
-      StokNo: "",
-      Description: "",
-      target: "",
-      machine: "",
-      operation: "",
-      Route: "",
-      process: "",
-      visible: false,
-    },
-    9: {
-      StokNo: "",
-      Description: "",
-      target: "",
-      machine: "",
-      operation: "",
-      Route: "",
-      process: "",
-      visible: false,
-    },
-    10: {
-      StokNo: "",
-      Description: "",
-      target: "",
-      machine: "",
-      operation: "",
-      Route: "",
-      process: "",
-      visible: false,
-    },
-    11: {
-      StokNo: "",
-      Description: "",
-      target: "",
-      machine: "",
-      operation: "",
-      Route: "",
-      process: "",
-      visible: false,
-    },
-    12: {
-      StokNo: "",
-      Description: "",
-      target: "",
-      machine: "",
-      operation: "",
-      Route: "",
-      process: "",
-      visible: false,
-    },
-    13: {
-      StokNo: "",
-      Description: "",
-      target: "",
-      machine: "",
-      operation: "",
-      Route: "",
-      process: "",
-      visible: false,
-    },
-    14: false,
-    15: {
-      StokNo: "",
-      Description: "",
-      target: "",
-      machine: "",
-      operation: "",
-      Route: "",
-      process: "",
-      visible: false,
-    },
-    16: {
-      StokNo: "",
-      Description: "",
-      target: "",
-      machine: "",
-      operation: "",
-      Route: "",
-      process: "",
-      visible: false,
-    },
-    17: {
-      StokNo: "",
-      Description: "",
-      target: "",
-      machine: "",
-      operation: "",
-      Route: "",
-      process: "",
-      visible: false,
-    },
-    18: {
-      StokNo: "",
-      Description: "",
-      target: "",
-      machine: "",
-      operation: "",
-      Route: "",
-      process: "",
-      visible: false,
-    },
-  });
+  
+
+  
   const [data, setData] = useState([]);
   const [selectedValue, setSelectedValue] = useState("");
   const [selectedValue2, setSelectedValue2] = useState("");
@@ -248,9 +76,9 @@ const Settings = () => {
   };
 
   const handleChange5 = (index, key, event) => {
-   event.preventDefault();
+    event.preventDefault();
     const value = event.target.value;
-    
+    console.log(event)
     setKutular((prevKutular) => ({
       ...prevKutular,
       [index]: {
@@ -259,7 +87,26 @@ const Settings = () => {
       },
     }));
     event.preventDefault();
+    console.log(kutular)
   };
+  /*const handleChange5 = (index, key, event ) => {
+    //console.log(index, event.target.name);
+    const values = {...kutular};
+    values[index][key] = event.target.value;
+    //setKutular(values);
+    
+    console.log(values)
+    console.log(kutular)
+    console.log(index)
+    console.log(key)
+    console.log(event)
+
+
+
+
+  };*/
+  
+
 
   const isNonMobile = useMediaQuery("(min-width:350px)");
   const initialValues = {
@@ -318,7 +165,7 @@ const Settings = () => {
     });
     return [...unique.values()];
   };
-  const yatayarttir = (index) => {
+  /*const yatayarttir = (index) => {
     setKutular((prevKutular) => ({
       ...prevKutular,
       [index]: {
@@ -326,7 +173,7 @@ const Settings = () => {
         visible: true,
       },
     }));
-  };
+  };*/
   const Acilirmenurenkleri = {
     option: (provided, state) => ({
       ...provided,
@@ -335,42 +182,105 @@ const Settings = () => {
       backgroundColor: state.isSelected ? "white" : colors.primary[500],
     }),
   };
+  const[yatayx, setYatayx]= useState(0)
+  const[dikeyy, setDikeyy]= useState(1)
+  const[kutusayisi, setKutusayisi]= useState(1)
+  
+  const alanekle = (indis) => {
+   
+    const prevyatay=yatayx
+   
+    const currentKutu = kutular.filter((item) => item.indis === parseInt(indis))[0];
 
+    
+
+     const newKutu = { indis: kutusayisi+1,   yataykonum: currentKutu.yataykonum+8, duseykonum: currentKutu.duseykonum}
+     console.log(newKutu)
+     setKutular([...kutular, newKutu ]) ;
+     setKutusayisi( prevKutusayisi => prevKutusayisi+1)
+     setYatayx( prevyatay+8)
+     
+   
+   };
+
+   const alanekleDikey = (indis) => {
+   
+    
+    const prevdikey=dikeyy
+    const currentKutu = kutular.filter((item) => item.indis === parseInt(indis))[0];
+     
+    const newKutu = { indis: kutusayisi+1,   yataykonum: currentKutu.yataykonum, duseykonum: currentKutu.duseykonum+5}
+     setKutular([...kutular, newKutu]) ;
+     setKutusayisi( prevKutusayisi => prevKutusayisi+1)
+     setDikeyy(prevdikey+5)
+     
+     
+   };
+
+  const [kutular, setKutular] = useState([
+    
+    
+      
+    {   indis: 1,
+          yataykonum: 0,
+          duseykonum: 1,
+      },
+     
+
+   ]);
+  
+
+ 
+  
+  
   function Kutu({ index }) {
+
+    
+  
+ 
+   
+
+  const deneme = () =>{
+    
+    setKutusayisi( prevKutusayisi => prevKutusayisi+1)
+    setYatayx( prevYatayx=> prevYatayx+4)
+
+    console.log(yatayx , "yatay deger")
+   
+
+  }
+  
     return (
-      <Grid2 container spacing={-1}>
-        <Grid2
-          container
+        <div>
+        <Box
+         
           display="grid"
-          width="25vh"
+          //width="25vh"
           border="2px solid"
           textAlign="center"
-          gridTemplateColumns="repeat(4, 1fr)"
+          gridTemplateColumns="repeat(8, 1fr)"
         >
           <Box
-            display="grid"
+         //   display="grid"
             border="1px solid"
-            height="15vh"
-            sx={{ gridColumn: "span 4" }}
+            //height="15vh"
+            sx={{ gridColumn: "span 8" }}
           >
             <Typography color={colors.grey[100]}>Görsel</Typography>
           </Box>
           <Box
-            display="grid"
-            sx={{ gridColumn: "span 3" }}
+           // display="grid"
+            sx={{ gridColumn: "span 6" }}
             //textbox özellikleri
           >
-            <Formik
-              onSubmit={handleFormSubmit}
-              initialValues={initialValues}
-            >
+            <Formik onSubmit={handleFormSubmit} >
               {({
                 values,
                 touched,
                 handleBlur,
                 handleChange,
                 handleSubmit,
-                onSubmit
+                onSubmit,
               }) => (
                 <form onSubmit={handleSubmit}>
                   <TextField
@@ -380,9 +290,10 @@ const Settings = () => {
                     type="text" //number yapılabilir
                     label="Stok No "
                     handleSubmit={onSubmit}
-                    onBlur={handleBlur} //fonksiyon dokundugunda degisiyor veya degismiyor
-                    value={kutular[index].StokNo}
-                    onChange={(event) => handleChange5(index, "StokNo", event)} // text değişip değişmiyor
+                    //onBlur={handleBlur} //fonksiyon dokundugunda degisiyor veya degismiyor
+                    //value={kutular[index].StokNo}
+                   // onChange={(event) => handleChange5(index, "StokNo", event)} // text değişip değişmiyor
+
                     name="StokNo"
                     size="medium" //medium ve small
                   />
@@ -394,10 +305,9 @@ const Settings = () => {
                     type="text"
                     label="Açıklama"
                     onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={kutular[index].Description}
+                   // onChange={(event) => handleChange5(index, "Description", event)}
+                    //value={kutular[index].Description}
                     name="Description"
-                    
                   />
                   <TextField
                     //fullWidth
@@ -406,8 +316,8 @@ const Settings = () => {
                     type="text"
                     label="Hedef"
                     onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={kutular[index].hedef}
+                    //onChange={handleChange}
+                    //value={kutular[index].hedef}
                     name="target"
                   />
 
@@ -453,7 +363,7 @@ const Settings = () => {
                     label="Makine Kodu"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={kutular[index].machine}
+                    //value={kutular[index].machine}
                     name="machine"
                   />
                   <TextField
@@ -463,7 +373,7 @@ const Settings = () => {
                     label="Operasyon Adı"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={kutular[index].operation}
+                    //value={kutular[index].operation}
                     name="operation"
 
                     // sx={{".MuiInputBase-input": { fontSize: "0,1rem" },
@@ -475,7 +385,7 @@ const Settings = () => {
                     label="Route"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={kutular[index].route}
+                    //value={kutular[index].route}
                     name="route"
                     // sx={{ gridColumn: "span 4", textAlign: "center" }}
                     disabled
@@ -484,90 +394,48 @@ const Settings = () => {
               )}
             </Formik>
           </Box>
-          <Box display="grid" sx={{ gridColumn: "span 1" }}>
+          <Box display="grid" sx={{ gridColumn: "span 2" }}>
             <IconButton
               display="grid"
-              onClick={() => yatayarttir(parseInt(index) + 1)}
+              //onClick={() => yatayarttir(parseInt(index) + 1)}
+              onClick={() =>alanekle(parseInt(index))}
             >
               <ArrowRightIcon display="grid" fontSize="large"></ArrowRightIcon>
             </IconButton>
             <IconButton
-              display="grid"
-              onClick={() => yatayarttir(parseInt(index) + 6)}
+             // display="grid"
+              onClick={() =>alanekleDikey(parseInt(index))}
             >
               <ArrowDropDownIcon
-                display="grid"
+              //  display="grid"
                 fontSize="large"
               ></ArrowDropDownIcon>
             </IconButton>
           </Box>
-        </Grid2>
-      </Grid2>
+        </Box>
+        </div>
     );
+    
   }
 
-  function BosKutu({ index }) {
-    return (
-      <Grid2 container spacing={-1}>
-        <Grid2
-          container
-          //xl={1.5} mdOffset={yatay}
-          //md={1.5} mdOffset={yatay}
-          //alignItems='center'
 
-          //gap="10px"
-          display="grid"
-          //gridTemplateColumns="repeat(8, 1fr)"
-          //gap="10px"
-          //mt="5px"
-          // ml="5px"
-          //display="grid"
-          // mr="5px"
-          width="25vh"
-          // height="50%"
-          // border="2px solid"
-          textAlign="center"
-          gridTemplateColumns="repeat(4, 1fr)"
-        ></Grid2>
-      </Grid2>
-    );
-  }
+ 
 
   return (
-    <div>
-      <Box display="grid">
-        <Header title="SETTINGS" subtittle="Ayarlar" />
-      </Box>
-      <Box display="flex">
-        {kutular[1].visible ? <Kutu index="1" /> : <BosKutu index="1" />}
-        {kutular[2].visible ? <Kutu index="2" /> : <BosKutu index="2" />}
-        {kutular[3].visible ? <Kutu index="3" /> : <BosKutu index="3" />}
-        {kutular[4].visible ? <Kutu index="4" /> : <BosKutu index="4" />}
-        {kutular[5].visible ? <Kutu index="5" /> : <BosKutu index="5" />}
-        {kutular[6].visible ? <Kutu index="6" /> : <BosKutu index="6" />}
-      </Box>
-
-      <Box display="flex">
-        {kutular[7].visible ? <Kutu index="7" /> : <BosKutu index="7" />}
-        {kutular[8].visible ? <Kutu index="8" /> : <BosKutu index="8" />}
-        {kutular[9].visible ? <Kutu index="9" /> : <BosKutu index="9" />}
-        {kutular[10].visible ? <Kutu index="10" /> : <BosKutu index="10" />}
-        {kutular[11].visible ? <Kutu index="11" /> : <BosKutu index="11" />}
-        {kutular[12].visible ? <Kutu index="12" /> : <BosKutu index="12" />}
-      </Box>
-
-      <Box display="flex">
-        {kutular[13].visible ? <Kutu index="13" /> : <BosKutu index="13" />}
-        {kutular[14].visible ? <Kutu index="14" /> : <BosKutu index="14" />}
-        {kutular[15].visible ? <Kutu index="15" /> : <BosKutu index="15" />}
-        {kutular[16].visible ? <Kutu index="16" /> : <BosKutu index="16" />}
-        {kutular[17].visible ? <Kutu index="17" /> : <BosKutu index="17" />}
-        {kutular[18].visible ? <Kutu index="18" /> : <BosKutu index="18" />}
-      </Box>
-      <Box>
-        <BosKutu></BosKutu>
-      </Box>
+   
+   <Gridlayout className="layout" cols={40} rowHeight={75} width={1200}>
+    <div key="header" >            <Header title="SETTINGS" subtittle="Ayarlar" />    </div>
+      
+     
+    
+    {kutular.map ((option, id) => (
+    
+    <div key={option.indis} data-grid={{ x:option.yataykonum, y: option.duseykonum, w: 8, h:2}} >
+    <Kutu key={option.indis} index={option.indis} > </Kutu>
     </div>
+    ))}
+    
+    </Gridlayout>
   );
 };
 

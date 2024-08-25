@@ -20,6 +20,7 @@ import Login from "./login/loginMainMenu";
 import Process from "./ProsesMakineTanimlama/Process";
 import Machine from "./ProsesMakineTanimlama/Machine";
 import Sprocess from "./ProsesMakineTanimlama/Sprocess";
+import Bomdesc from "./ProsesMakineTanimlama/Bomdesc";
 
 
 
@@ -50,6 +51,8 @@ function App() {
               <Route path="/setup/sprocess" element={<Sprocess />} />
 
               <Route path="/setup/machine" element={<Machine />} />
+              <Route path="/setup/bomdesc" element={<Bomdesc />} />
+
 
 
 
